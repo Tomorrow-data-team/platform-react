@@ -61,7 +61,7 @@ import Settings from "@/pages/pages/Settings";
 import Projects from "@/pages/pages/Projects";
 import Chat from "@/pages/pages/Chat";
 //import UcidList from "./pages/Portal/ucid/UcidList";
-import UcidDetails from "./pages/Portal/ucid/Uciddetails";
+import UcidDetails from "./pages/Portal/ucid/UcidDetails";
 import UcidCreate from "./pages/Portal/ucid/UcidCreate";
 
 // Table components
