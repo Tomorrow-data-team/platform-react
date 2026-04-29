@@ -143,11 +143,11 @@ function formulateLineOptions(data){
     for(var item of data){
       //console.log(item)
       labels.push(item['Date'].slice(0,11))
-      spend.push(item['Spend'].toFixed(0))
-      revenue.push(item['Revenue'].toFixed(0))
-      purchases.push(item['Purchases'].toFixed(0))
-      impressions.push(item['Impressions'].toFixed(0))
-      clicks.push(item['Clicks'].toFixed(0))
+      spend.push(Math.round(item['Spend'] ?? 0))
+      revenue.push(Math.round(item['Revenue'] ?? 0))
+      purchases.push(Math.round(item['Purchases'] ?? 0))
+      impressions.push(Math.round(item['Impressions'] ?? 0))
+      clicks.push(Math.round(item['Clicks'] ?? 0))
       //roas.push(item['roas'])
     }
     if(data.length <=1){
