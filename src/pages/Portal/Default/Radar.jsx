@@ -53,12 +53,12 @@ const Brand = styled.div`
   padding-right:10;
 `;
 
-const brands={'META':{'src':'/public/static/img/brands/meta.svg','colour': "#6e40f8"},
-  'Google Ads':{src:'/public/static/img/brands/google.svg','colour':"#fb0000"},
-  'TikTok':{src:'/public/static/img/brands/tiktok.svg','colour':"#5e5e5e"},
-  'Bing':{src:'/public/static/img/brands/microsoft.svg','colour':"#4ffb00"},
-  'Snapchat':{src:'/public/static/img/brands/snapchat.svg','colour':yellow[500]},
-  'UAC':{src:'/public/static/img/brands/app.svg','colour':"#ffffff"}
+const brands={'META':{'src':'/static/img/brands/meta.svg','colour': "#6e40f8"},
+  'Google Ads':{src:'/static/img/brands/google.svg','colour':"#fb0000"},
+  'TikTok':{src:'/static/img/brands/tiktok.svg','colour':"#5e5e5e"},
+  'Bing':{src:'/static/img/brands/microsoft.svg','colour':"#4ffb00"},
+  'Snapchat':{src:'/static/img/brands/snapchat.svg','colour':yellow[500]},
+  'UAC':{src:'/static/img/brands/app.svg','colour':"#ffffff"}
 }
 
 const ChartWrapper = styled.div`

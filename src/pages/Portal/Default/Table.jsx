@@ -90,12 +90,12 @@ function formatTableCell(key, campaign, align){
     return <TableCell align={align}>£{parseFloat(campaign[key].toFixed(0)).toLocaleString()}</TableCell>
   }
   }
-const brands={'META':{'src':'/public/static/img/brands/meta.svg'},
-  'Google Ads':{'src':'/public/static/img/brands/google.svg'},
-  'TikTok':{'src':'/public/static/img/brands/tiktok.svg'},
-  'Bing':{'src':'/public/static/img/brands/microsoft.svg'},
-  'Snapchat':{'src':'/public/static/img/brands/snapchat.svg'},
-  'UAC':{'src':'/public/static/img/brands/app.svg'}
+const brands={'META':{'src':'/static/img/brands/meta.svg'},
+  'Google Ads':{'src':'/static/img/brands/google.svg'},
+  'TikTok':{'src':'/static/img/brands/tiktok.svg'},
+  'Bing':{'src':'/static/img/brands/microsoft.svg'},
+  'Snapchat':{'src':'/static/img/brands/snapchat.svg'},
+  'UAC':{'src':'/static/img/brands/app.svg'}
 }
 
   

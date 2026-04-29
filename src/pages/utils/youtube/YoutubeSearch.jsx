@@ -93,7 +93,7 @@ export default function YoutubeSearch(){
             <Brand>
             <BrandIcon
                 alt="Youtube Icon"
-                src="/public/static/img/brands/youtube.svg"
+                src="/static/img/brands/youtube.svg"
                 style={{ height: "30px" }}
             />
             </Brand>
