@@ -232,9 +232,9 @@ function Elsewhere() {
               <ExternalLink />
             </AboutIcon>
           </Grid>
-          <Grid>
+          {/*<Grid>
             <Link href="https://mira.bootlab.io/">lucylavender.io</Link>
-          </Grid>
+          </Grid>*/}
         </Grid>
         <Grid container direction="row" alignItems="center" mb={2}>
           <Grid>

@@ -47,7 +47,7 @@ function DataPage({date, menuItems, setDateText, setMainLoading}) {
     setStatus("loading");
     setError(null);
 
-  
+    try {
       const [a, b, c, d] = await Promise.all([
         getTotal(client.clientId, date),
         getDaily(client.clientId, date),
@@ -61,7 +61,11 @@ function DataPage({date, menuItems, setDateText, setMainLoading}) {
       console.log(a,b,c,d)
 
       setStatus("success");
-    
+    } catch (err) {
+      console.log(err.response.data.error)
+      setError(err.response.data.error || "Something went wrong");
+      setStatus("error");
+    }
   };
 
   useEffect(() => {

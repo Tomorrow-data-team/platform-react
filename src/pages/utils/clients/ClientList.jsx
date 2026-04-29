@@ -217,7 +217,7 @@ export default function EnhancedTable({active}) {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:5000/clients/all`, {headers: {'Content-Type': 'application/json'}})
+    axios.get(`https://platform-flask-production-28c4.up.railway.app/clients/all`, {headers: {'Content-Type': 'application/json'}})
       .then(response => {
         setClients(response.data);
         console.log(response.data)
