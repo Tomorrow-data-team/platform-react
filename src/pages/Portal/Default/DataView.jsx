@@ -85,7 +85,7 @@ function DataPage({date, menuItems, setDateText, setMainLoading}) {
           <LineChart data={dataDaily} />  
         </Grid>
         <Grid size={{xs: 12, lg: 4}}>
-          {/*<Radar data={dataChannel} />*/}
+          <Radar data={dataChannel} />
         </Grid>
       </Grid>
       

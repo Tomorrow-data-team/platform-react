@@ -122,33 +122,22 @@ const Radar = ({ theme, data }) => {
     const [choices, setChoices] = useState({'var1':"Spend", 'var2':'Revenue'})
     const [tempData, setTempData] = useState()
 
-    function formulateDoughnutData(){
-    const labels=[]
-    const spend=[]
-    const revenue=[]
-    const purchases=[]
-    const clicks =[]
-    const impressions = []
-    const roas =[]
-    for(var item of data){
-      labels.push(item['Platform'].slice(0,11))
-      spend.push(item['Spend'].toFixed(0))
-      revenue.push(item['Revenue'].toFixed(0))
-      purchases.push(item['Purchases'].toFixed(0))
-      impressions.push(item['Impressions'].toFixed(0))
-      clicks.push(item['Clicks'].toFixed(0))
-      //roas.push(item['roas'])
-    }
+const METRICS = ["Spend", "Revenue", "Purchases", "Impressions", "Clicks"];
 
-    const Nspend=normalizeVals(spend)
-    const Nrevenue=normalizeVals(revenue)
-    const Npurchases=normalizeVals(purchases)
-    const Nimpressions=normalizeVals(impressions)
-    const Nclicks=normalizeVals(clicks)
-  //const Nroas=normalizeVals(roas)
+function buildData() {
+  const labels = data.map(item => item.Platform.slice(0, 11));
 
-    const vals = {labels:labels, spend:Nspend, revenue:Nrevenue, purchases:Npurchases, impressions:Nimpressions, clicks:Nclicks}
-    console.log(vals)
+  const values = METRICS.reduce((acc, metric) => {
+    acc[metric.toLowerCase()] = normalizeVals(
+      data.map(item => item[metric])
+    );
+    return acc;
+  }, {});
+
+  const result = {
+    labels,
+    ...values
+  };
     setTempData(vals)
     setData(vals)
   }
@@ -192,7 +181,7 @@ const Radar = ({ theme, data }) => {
     useEffect(() => {
       if(!tempData){
         console.log("initial")
-        formulateDoughnutData()
+        buildData()
       }
       else{
         console.log("change")
