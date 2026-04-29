@@ -138,8 +138,8 @@ function buildData() {
     labels,
     ...values
   };
-    setTempData(vals)
-    setData(vals)
+    setTempData(result)
+    setData(result)
   }
 
     function setData(data){
@@ -228,16 +228,16 @@ function buildData() {
         }
         title="Platforms"
       />
-      <ChartWrapper styles={{padding:'none'}}>
+      <ChartWrapper style={{padding:'none'}}>
         <CardContent sx={{paddingTop:'0px'}}>
           <Grid container spacing={6}>       
             <Grid sx={{ height:'200px',width: '100%'}} size={{xs: 4, lg: 12}}>
               {radarData&&<RadarChart data={radarData} options={options} />}
             </Grid>
             <Grid size={{xs: 8, lg: 12}}>
-              <Paper sx={{width: '100%', overflow: 'hidden', position:'relative'}}>
-                <TableContainer sx={{paddingTop:'5px', overflow:'auto'}}>
-                  <Table stickyHeader overflow>
+              <Paper sx={{height: 400, width: '100%', display: 'flex', flexDirection: 'column' }}>
+                <TableContainer sx={{ flex: 1, overflowY: 'auto', minHeight: 0  }}>
+                  <Table stickyHeader>
                     <TableHead sx={{backgroundColor:"inherit"}}>
                       <TableRow sx={{backgroundColor:"inherit"}}>
                         <TableCell   sx={{backgroundColor: (theme) => theme.palette.background.paper, zIndex: 1}} align="left"></TableCell>
