@@ -22,6 +22,7 @@ import BarChart from "./Bar";
 const Divider = styled(MuiDivider)(spacing);
 
 import Pie from "./Pie";
+import StatsChips from "./StatsChips";
 
 const Typography = styled(MuiTypography)(spacing);
 
@@ -57,7 +58,7 @@ function BSI() {
       .then(response => {
         setTableData(response.data)
         const data = formulateData(response.data)
-        setBsi(data)
+        setBsi(response.data)
         setLoading(false)
         console.log(data)
       })
@@ -90,36 +91,24 @@ function BSI() {
       <Box display="flex" justifyContent="center" my={6}>
         <CircularProgress />
       </Box>:<>
-      <Grid container spacing={6}>
-        <Grid
-            size={{
-              xs: 12,
-              lg: 8,
-            }}
-          >
-        
-        <BsiTable tableData={tableData}/>
-        </Grid>
-        
-        <Grid
-            size={{
-              xs: 12,
-              lg: 4,
-            }}
-          >
-      <Pie BSI={bsi}/>
-        </Grid>
-        
+      <Grid container spacing={6}>        
         <Grid
             size={{
               xs: 12,
               lg: 12,
             }}
           >
-        <BarChart bsi={bsi}/>
+        <StatsChips bsi={bsi}/>
         </Grid>
+
         
-      </Grid></>}
+      </Grid> 
+      <Divider my={6} />
+
+          <Typography variant="h5" gutterBottom display="inline">
+            Historical
+          </Typography>
+          </>}
     </React.Fragment>
   );
 }

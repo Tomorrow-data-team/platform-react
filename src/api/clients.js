@@ -16,6 +16,13 @@ export const getActiveClients = async () =>{
     return Array.isArray(data) ? data : [];
 }
 
+export const getAllClients = async () =>{
+    const res = await axios.get([baseURL, 'clients/all'].join("/"))
+    const data = res.data ?? [];
+
+    return Array.isArray(data) ? data : [];
+}
+
 export const getLookerDetails = async (id) =>{
     const res = await axios.get([baseURL, 'clients/looker',id].join("/"))
     const data = res.data ?? [];

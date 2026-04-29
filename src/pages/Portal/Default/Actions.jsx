@@ -2,31 +2,13 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { Box, CircularProgress, Button as MuiButton, Menu, MenuItem, LinearProgress } from "@mui/material";
-import {
-  Loop as LoopIcon,
-  FilterList as FilterListIcon,
-} from "@mui/icons-material";
 import { spacing } from "@mui/system";
-
-import { MyDatePicker } from "./Date new";
-import Pickers from "./Date";
 
 const Button = styled(MuiButton)(spacing);
 
-const SmallButton = styled(Button)`
-  padding: 4px;
-  min-width: 0;
-
-  svg {
-    width: 0.9em;
-    height: 0.9em;
-  }
-`;
-
 function Actions(props) {
-  const { date, setDate, menuItems, setDateText, mainLoading } = props;
+  const { date, setDate, menuItems, setDateText, mainLoading, setLoading } = props;
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false)
 
   const handleOpen = (event) => {
     if(anchorEl){setAnchorEl(null)}
@@ -37,6 +19,7 @@ function Actions(props) {
   const handleClick = (event) => {
         setAnchorEl(null);
     setDate(event.target.dataset.value)
+    //setLoading(true)
     //getTotals(event.target.dataset.value)
   };
 
@@ -46,20 +29,7 @@ function Actions(props) {
   };
   return (
     <React.Fragment>
-      {mainLoading?<Box display="flex"         sx={{
-          width: 30,
-          height: 30}} position="relative" justifyContent="center" my={0}>
-        <CircularProgress size={30} my={2}/>
-      </Box>:<>
-      {/*<SmallButton size="small" mr={2}>
-        <LoopIcon />
-      </SmallButton>
-      <SmallButton size="small" mr={2}>
-        <FilterListIcon />
-      </SmallButton>
-      <SmallButton size="small" mr={2}>
-        <Pickers />
-      </SmallButton>*/}
+      {mainLoading?<></>:<>
       <Button
         variant="contained"
         color="secondary"

@@ -59,7 +59,7 @@ function DataPage({date, menuItems, setDateText, setMainLoading}) {
       setDataChannel(c);
       setDataCampaign(d);
       console.log(a,b,c,d)
-
+      
       setStatus("success");
     } catch (err) {
       console.log(err.response.data.error)

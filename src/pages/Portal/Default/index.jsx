@@ -66,7 +66,7 @@ function Dashboard() {
       <Grid justifyContent="space-between" container spacing={6}>
         <Grid>
           <Typography variant="h3" gutterBottom>
-            Overview
+            Home
           </Typography>
           
           {dateText?<>

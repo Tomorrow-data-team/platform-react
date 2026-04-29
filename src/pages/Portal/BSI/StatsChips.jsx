@@ -4,46 +4,56 @@ import { Grid, Box, CircularProgress } from "@mui/material"
 import Stats from "./Stats"
 import axios from "axios"
 import { green, red } from "@mui/material/colors";
-import TempStatsChips from "./TempStatsChips"
+import TempStatsChips from "../Default/TempStatsChips"
 
 const currency = ["Revenue", "Spend"]
 
 const chipOrder = ['Spend', 'Impressions', 'Clicks', 'Purchases', "Revenue"]
 
-export default function StatsChips({date, menuItems, setDateText, setMainLoading}){
-  const [loading, setLoading] = useState(true)
-  const [updatedDate, setUpdatedDate] = useState()
+export default function StatsChips({bsi}){
 
-  const [totals, setTotals] = useState()
+const cleaned = React.useMemo(() => {
+  if (!bsi?.length) return [];
+
+  const filtered = bsi.filter(d => ['__INTERCEPT__', 'brand_spend'].indexOf(d['processed_input']) ==-1 && d['weight']>=0)
+  console.log(bsi.map(d => d.weight));
+  const weights = filtered.map(d => Math.log(d.weight + 1e-10));
+  const min = Math.min(...weights);
+  const max = Math.max(...weights);
+
+  return filtered.map(d => ({
+    ...d,
+    score: ((Math.log(d.weight + 1e-10) - min) / (max - min)) * 10
+  }));
+}, [bsi]);
+
 
 return(
     <>
-      {loading?
-      <Box display="flex" justifyContent="center" my={6}>
-        <CircularProgress />
-      </Box>:
+
       <Grid container spacing={6}>
-      {chipOrder.map(key=>{
+      {cleaned.filter(row => ['__INTERCEPT__', 'brand_spend'].indexOf(row['processed_input']) == -1).map(row=>{
+        console.log(row)
         return(
         <Grid
           size={{
             xs: 12,
-            sm: 12,
+            sm: 6,
             md: 6,
             lg: 3,
-            xl: "grow",
+            //xl: "grow",
           }}
         >
           <Stats
-            title={key}
-            amount={currency.includes(key)? '£'+parseFloat(totals[0][key].toFixed(0)).toLocaleString(): parseFloat((totals[0][key].toFixed(0))).toLocaleString()}
-            chip={menuItems[updatedDate]['chip']}
-            percentagetext={(((totals[0][key]-totals[1][key])/totals[1][key])*100).toFixed(2)+'%'}
-            percentagecolor={totals[0][key]>=totals[1][key]?green[500]:red[500]}
-            text={menuItems[updatedDate]['text']}
-            //percentagecolor={green[500]}
+            title={row['processed_input'].replace("_"," ")}
+            amount={parseFloat(row['score']).toFixed(2)}
+            chip='BSI'
+            percentagetext={row['p_value']<=0.05?true:false}
+            //percentagecolor={totals[0][key]>=totals[1][key]?green[500]:red[500]}
+            //text={menuItems[updatedDate]['text']}
+            percentagecolor={row['p_value']<=0.05?green[500]:red[500]}
           />
-        </Grid> )})}</Grid>}
+        </Grid> )})}</Grid>
         </>
     )
 

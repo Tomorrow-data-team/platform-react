@@ -16,8 +16,13 @@ import {
   Typography,
 } from "@mui/material";
 import { CloudUpload as MuiCloudUpload, Add as AddIcon} from "@mui/icons-material";
+import { Save } from "@mui/icons-material";
+import { GridCloseIcon } from "@mui/x-data-grid";
 import { spacing } from "@mui/system";
 import ClientList from "./ClientList";
+import NewClients from "./NewClients";
+import FullFeaturedCrudGrid from "./testUpdateRow";
+import { useState } from "react";
 
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
@@ -44,6 +49,7 @@ const BigAvatar = styled(Avatar)`
 `;
 
 function AllClientSettings() {
+  const [isAdding, setIsAdding] = useState(false);
 
   return (
     <React.Fragment>
@@ -63,11 +69,22 @@ function AllClientSettings() {
       </Grid>
               <Grid>
                 <div>
-                  <Button component={NavLink} to={"create"} variant="contained" color="primary">
+                  {!isAdding?
+                  <Button onClick={()=>{setIsAdding(true)}} variant="contained" color="primary">
                     
                     New Client
                     <AddIcon />
+                  </Button>:<>
+                                    <Button component={NavLink} to={"create"} variant="contained" color="primary">
+                    
+                    
+                    <Save />
                   </Button>
+                                    <Button onClick={()=>{setIsAdding(false)}} variant="contained" color="primary">
+                    
+                    
+                    <GridCloseIcon />
+                  </Button></>}
                 </div>
               </Grid>
             </Grid>
@@ -79,7 +96,7 @@ function AllClientSettings() {
             lg: 12,
           }}
         >
-          <ClientList active={true}/>
+          <NewClients setIsAdding={setIsAdding} isAdding={isAdding}/>
         </Grid>
 
           
