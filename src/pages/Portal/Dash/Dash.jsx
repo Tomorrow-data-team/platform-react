@@ -60,8 +60,8 @@ const Chip = styled(MuiChip)`
 
 
 function Dash() {
-  const client = useParams()
-  console.log(client.slug)
+  const { clientSlug, clientId } = useParams()
+  console.log(clientId)
 
   const [display, setDisplay] = useState('none')
 
@@ -77,12 +77,12 @@ function Dash() {
       </Grid>
       <Divider my={6} />*/}
         <div style={{height:'100%', width:'100%', justifyContent:"center"}}>
-          {lookerUrl[client.slug]?
+          {lookerUrl[clientSlug]?
           <iframe
             onLoad={()=>{setDisplay(false)}}
             width='100%'
             height="100%"
-            src={lookerUrl[client.slug]}
+            src={lookerUrl[clientSlug]}
             allowFullScreen
             border= "none"
             sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">

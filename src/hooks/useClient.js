@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { ClientContext } from "@/contexts/ClientContext";
+import { ClientProvider } from "@/contexts/ClientContext";
 
-const useClient = () => useContext(ClientContext);
+const useClient = () => useContext(ClientProvider);
 
 export default useClient;

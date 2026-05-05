@@ -25,7 +25,7 @@ import Stats from "./Stats";
 import CampaignTable from "./Table";
 import StatsChips from "./StatChips";
 import { useParams } from "react-router";
-
+import { useQuery } from "@tanstack/react-query";
 import { getTotal, getByCampaign, getByChannel, getDaily } from "api/data";
 import Loading from "@/layouts/Loading";
 import Error from "@/layouts/Error";
@@ -34,47 +34,40 @@ import Error2 from "@/layouts/Error2";
 
 function DataPage({date, menuItems, setDateText, setMainLoading}) {
 
-    const client=useParams()
-    const [status, setStatus] = useState("loading");
-  const [error, setError] = useState(null);
+    const { clientSlug, clientId } = useParams();
 
-  const [dataTotal, setDataTotal] = useState(null);
-  const [dataDaily, setDataDaily] = useState(null);
-  const [dataChannel, setDataChannel] = useState(null);
-  const [dataCampaign, setDataCampaign] = useState(null);
+    const {
+      data,
+      isLoading,
+      isError,
+      error,
+    } = useQuery({
+      queryKey: ['dashboard', clientId, date],
+      queryFn: async () => {
+        const [total, daily, channel, campaign] = await Promise.all([
+          getTotal(clientId, date),
+          getDaily(clientId, date),
+          getByChannel(clientId, date),
+          getByCampaign(clientId, date),
+        ]);
 
-  const fetchAll = async () => {
-    setStatus("loading");
-    setError(null);
+        return {
+          total,
+          daily,
+          channel,
+          campaign,
+        };
+      },
+      enabled: !!clientId, // prevents running before params exist
+    });
 
-    try {
-      const [a, b, c, d] = await Promise.all([
-        getTotal(client.clientId, date),
-        getDaily(client.clientId, date),
-        getByChannel(client.clientId, date),
-        getByCampaign(client.clientId, date),
-      ]);
-      setDataTotal(a);
-      setDataDaily(b);
-      setDataChannel(c);
-      setDataCampaign(d);
-      console.log(a,b,c,d)
-      
-      setStatus("success");
-    } catch (err) {
-      console.log(err.response.data.error)
-      setError(err.response.data.error || "Something went wrong");
-      setStatus("error");
-    }
-  };
+const dataTotal = data?.total;
+const dataDaily = data?.daily;
+const dataChannel = data?.channel;
+const dataCampaign = data?.campaign;
 
-  useEffect(() => {
-    console.log("fetching")
-    fetchAll();
-  }, [date]);
-
-  if(status=='loading') return <Loading />
-  if(status=='error') return <Error2 error={error} />
+  if(isLoading) return <Loading />
+  if(isError) return <Error2 error={error} />
 
   return (
     <React.Fragment>

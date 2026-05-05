@@ -220,14 +220,14 @@ function buildData() {
 
   return (
     <Card mb={6} >
-      <CardHeader
+      {/*<CardHeader
         action={
             <SmallButton size="large">
               <ChartFilter choices={choices} setChoices={setChoices}/>
             </SmallButton>
         }
         title="Platforms"
-      />
+      />*/}
       <ChartWrapper style={{padding:'none'}}>
         <CardContent sx={{paddingTop:'0px'}}>
           <Grid container spacing={6}>       

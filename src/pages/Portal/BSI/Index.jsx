@@ -20,15 +20,17 @@ import { spacing } from "@mui/system";
 import RadarChart from "./Radar";
 import BarChart from "./Bar";
 const Divider = styled(MuiDivider)(spacing);
-
+import LineChart from "./Line";
 import Pie from "./Pie";
 import StatsChips from "./StatsChips";
+import Choices from "./Choices";
 
 const Typography = styled(MuiTypography)(spacing);
 
 const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
 function formulateData(data){
+
     const labels=[]
     const values=[]
     for(var item of data){
@@ -52,6 +54,61 @@ function BSI() {
   const [bsi, setBsi] = useState()
   const [tableData, setTableData] = useState()
   const [loading, setLoading] = useState(true)
+  const [model, setModel] = useState(1)
+  const modelOptions = [{'model':1, 'Title':"Seperated"}, {'model':2,"Title":'Combined'}]
+
+  const [options, setOptions] = useState({})
+  const [bsi2, setBsi2] = useState()
+  const [status, setStatus] = useState('idle')
+      function getBsi(){
+      setStatus('loading')
+      axios.get(`https://platform-flask-production-28c4.up.railway.app/bq/bsi/all/1`, {headers: {'Content-Type': 'application/json'}})
+          .then(response => {
+          //const data = formulateData(response.data)
+          const { data, categories } = transformData(response.data, model);
+          console.log(categories, data)
+          setBsi(data)
+          setOptions({
+              chart: {
+              zoom: {
+                  enabled: false,
+              },
+              },
+              dataLabels: {
+              enabled: false,
+              },
+              stroke: {
+              width: 3,        // same thickness for all
+              curve: "smooth",
+              dashArray: 0     // solid lines (no dashes)
+  
+              },
+              markers: {
+              size: 0,
+              style: "hollow", // full, hollow, inverted
+              },
+              xaxis: {
+              categories: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']
+              },
+              yaxis: {
+              labels: {
+                  formatter: (val) => val.toFixed(0) // change to 0, 1, 2, etc.
+              }
+              },
+              grid: {
+              borderColor: "#f3ebeb",
+              },
+  
+          })
+          setStatus('success')
+          console.log(response.data)
+          })
+          .catch(error => {
+              setStatus('error')
+          console.error(error);
+          });}
+  
+      useEffect(getBsi, [model])
 
   function getBsi(){
     axios.get(`https://platform-flask-production-28c4.up.railway.app/bq/bsi/1`, {headers: {'Content-Type': 'application/json'}})
@@ -84,6 +141,9 @@ function BSI() {
             <Typography >BSI</Typography>
           </Breadcrumbs>
         </Grid>
+              <Grid>
+          <Choices model={model} setModel={setModel} modelOptions={modelOptions}/>
+        </Grid>
 
       </Grid>
       <Divider my={6} />
@@ -104,10 +164,7 @@ function BSI() {
         
       </Grid> 
       <Divider my={6} />
-
-          <Typography variant="h5" gutterBottom display="inline">
-            Historical
-          </Typography>
+          <LineChart model = {model}/>
           </>}
     </React.Fragment>
   );

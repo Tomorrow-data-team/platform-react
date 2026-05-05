@@ -5,10 +5,14 @@ import Stats from "./Stats"
 import axios from "axios"
 import { green, red } from "@mui/material/colors";
 import TempStatsChips from "../Default/TempStatsChips"
+import { ModelTraining } from "@mui/icons-material"
 
 const currency = ["Revenue", "Spend"]
 
 const chipOrder = ['Spend', 'Impressions', 'Clicks', 'Purchases', "Revenue"]
+
+
+  // 🔴 1. ADD THIS FIRST: keep only latest date
 
 export default function StatsChips({bsi}){
 
@@ -26,6 +30,7 @@ const cleaned = React.useMemo(() => {
     score: ((Math.log(d.weight + 1e-10) - min) / (max - min)) * 10
   }));
 }, [bsi]);
+
 
 
 return(

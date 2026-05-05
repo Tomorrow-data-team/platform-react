@@ -19,7 +19,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import Footer from "@/components/Footer";
 import Settings from "@/components/Settings";
 import utils from "@/components/sidebar/utilItems";
-
+import SidebarNew from "@/components/newSidebar/Sidebar";
 const drawerWidth = 258;
 
 const Root = styled.div`
@@ -28,18 +28,24 @@ const Root = styled.div`
 `;
 
 const Drawer = styled.div`
-  ${(props) => props.theme.breakpoints.up("md")} {
-    width: ${drawerWidth}px;
-    flex-shrink: 0;
-  }
+  width: ${(props) => (props.collapsed ? "90px" : "260px")};
+  flex-shrink: 0;
+
+  height: 100vh;
+  overflow-y: auto;
+
+  transition: width 0.3s ease;
+
 `;
+
 
 const AppContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-width: 100%;
-  width: 0;
+  min-width: 0; /* IMPORTANT: prevents overflow issues */
+
+  transition: all 0.3s ease;
 `;
 
 const Paper = styled(MuiPaper)(spacing);
@@ -65,6 +71,7 @@ const MainContent = styled(Paper)`
 const Dashboard = ({ children }) => {
   const router = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false)
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -82,26 +89,12 @@ const Dashboard = ({ children }) => {
     <Root>
       <CssBaseline />
       <GlobalStyle />
-      <Drawer>
-        <Box sx={{ display: { xs: "block", lg: "none" } }}>
-          <Sidebar
-            PaperProps={{ style: { width: drawerWidth } }}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            dashboardItems={navItems}
-            utilItems={utils}
-          />
-        </Box>
-        <Box sx={{ display: { xs: "none", md: "block" } }}>
-          <Sidebar
-            PaperProps={{ style: { width: drawerWidth } }}
-            dashboardItems={navItems}
-            utilItems={utils}
-          />
-        </Box>
+      <Drawer collapsed={collapsed}>
+        <SidebarNew collapsed={collapsed} setCollapsed={setCollapsed}/>
+
+
       </Drawer>
-      <AppContent>
+      <AppContent collapsed={collapsed}>
         {<Navbar onDrawerToggle={handleDrawerToggle} />}
         <MainContent px={isLgUp ? 10 : 5} pt={isLgUp ? 10 : 5}>
           <Container maxWidth="xl">

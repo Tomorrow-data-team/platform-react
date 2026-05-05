@@ -70,7 +70,7 @@ const SearchIconWrapper = styled.div`
 `;
 const ImageWrapper = styled.div`
   width: 150px;
-  margin-left: 20px;
+  margin-left: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,7 +96,7 @@ const Input = styled(InputBase)`
 
 const Navbar = ({ onDrawerToggle }) => {
   const { t } = useTranslation();
-  const client = useParams()
+  const { clientSlug, clientId } = useParams()
   return (
     <React.Fragment>
       <AppBar position="sticky" elevation={1}>
@@ -113,8 +113,8 @@ const Navbar = ({ onDrawerToggle }) => {
               </IconButton>
             </Grid>
             <Grid>
-              {img[client.slug]?<ImageWrapper>
-              <Image src ={img[client.slug]}/>
+              {img[clientSlug]?<ImageWrapper>
+              <Image src ={img[clientSlug]}/>
               </ImageWrapper>:<></>}
               {/*<Search>
                 <SearchIconWrapper>

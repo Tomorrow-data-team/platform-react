@@ -35,32 +35,20 @@ export default function BasicExampleDataGrid() {
                                </IconButton>} },
 ];
 
-  const client=useParams()
-  console.log(client.clientId)
-  const [data,setData] = useState()
-  const [status, setStatus] = useState('idle')
-  const [error, setError] = useState()
-  const [success, setSuccess] = useState()
-  
-  const fetchData = async () => {
-      setStatus('loading')
-      try{
-      const resp = await getUCID(client.clientId);
-      setData(resp)
-      console.log(resp)
-      setStatus("success")
-      } catch(err){
-      setError(err.message);
-      setStatus('error')
-      }
-  }
-  useEffect(() => {
-      fetchData();
-  }, []);
+  const { clientSlug, clientId } =useParams()  
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['ucid', clientId],
+    queryFn: () => getUCID(clientId),
+    enabled: !!clientId, // important safety check
+  });
     
-  if(status=='loading') return <Loading />
-  if(status=='error') return <Error2/>
-  if(status=='success')
+  if(isLoading) return <Loading />
+  if(isError) return <Error2/>
 
   return (
     <Card>

@@ -190,14 +190,14 @@ function formulateLineOptions(data){
   return (
     
     <Card mb={6}>
-      <CardHeader
+      {/*<CardHeader
         action={
           <SmallButton size="large">
             <ChartFilter choices={choices} setChoices={setChoices}/>
           </SmallButton>
         }
         title={`${choices['var1']} VS ${choices['var2']}`}
-      />
+      />*/}
       <CardContent>
         <ChartWrapper>
           {lineData&&<Line data={lineData} options={options} />}

@@ -6,6 +6,7 @@ import { CssBaseline } from "@mui/material";
 
 import Settings from "@/components/Settings";
 import GlobalStyle from "@/components/GlobalStyle";
+import Dashboard from "./Dashboard";
 
 const Root = styled.div`
   max-width: 520px;

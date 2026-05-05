@@ -105,7 +105,6 @@ import Dash from "./pages/Portal/Dash/Dash";
 const Analytics = async(() => import("@/pages/dashboards/Analytics"));
 const SaaS = async(() => import("@/pages/dashboards/SaaS"));
 import ClientLayout from "./layouts/ClientLayout";
-import { ClientProvider } from "./contexts/ClientContext";
 import BigQuery from "./pages/Portal/ClientSettings/BQ";
 import YoutubeLayout from "./pages/utils/youtube/youtube";
 import YoutubeList from "./pages/utils/youtube/YoutubeList";
@@ -152,10 +151,10 @@ const routes = [
   },
     {
     path: "/",
-    element: <DashboardLayout />,
+    element: <ClientLayout />,
     children: [
-      {path:":clientId/:slug",
-        element:<ClientLayout />,
+      {path:":clientSlug/:clientId",
+        element:<DashboardLayout />,
         children:[
       {
         path: "overview",
@@ -609,11 +608,16 @@ const routes = [
   },
   {
     path: "*",
-    element: <ErrorLayout />,
+    element: <ClientLayout />,
     children: [
       {
         path: "*",
+        element: <DashboardLayout />,
+            children: [
+      {
+        path: "*",
         element: <Page404 />,
+      }]
       },
     ],
   },
